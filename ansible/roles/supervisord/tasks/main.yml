@@ -1,0 +1,11 @@
+---
+- name: Download and install supervisor
+  apt: name={{ item }} state=present
+  with_items:
+    - supervisor
+
+- name: Copy /etc/supervisor/conf.d/supervisord.conf
+  copy: src=supervisord.conf dest=/etc/supervisor/conf.d/supervisord.conf
+
+- name: Create /var/run/sshd
+  file: path=/var/run/sshd state=directory mode=0755

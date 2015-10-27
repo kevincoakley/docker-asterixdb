@@ -1,0 +1,28 @@
+---
+- name: Download and install openjdk-7-jdk and unzip
+  apt: name={{ item }} state=present
+  with_items:
+  - openjdk-7-jdk
+  - unzip
+  sudo: yes
+
+- name: Create /opt/asterixdb
+  file: path=/opt/asterixdb state=directory mode=0755
+
+- name: Download AsterixDB
+  get_url: url=http://asterixdb.ics.uci.edu/download/0.8.6/asterix-installer-0.8.6-binary-assembly.zip dest=/tmp/asterix-installer.zip
+
+- name: Extract AsterixDB
+  unarchive: src=/tmp/asterix-installer.zip dest=/opt/asterixdb/ copy=no
+
+- name: Configure AsterixDB
+  shell: /opt/asterixdb/bin/managix configure
+  environment:
+    JAVA_HOME: /usr/lib/jvm/java-7-openjdk-amd64/jre/
+    MANAGIX_HOME: "/opt/asterixdb"
+
+- name: Validate AsterixDB setup and config
+  shell: /opt/asterixdb/bin/managix validate -c /opt/asterixdb/clusters/local/local.xml
+  environment:
+    JAVA_HOME: /usr/lib/jvm/java-7-openjdk-amd64/jre/
+    MANAGIX_HOME: "/opt/asterixdb"

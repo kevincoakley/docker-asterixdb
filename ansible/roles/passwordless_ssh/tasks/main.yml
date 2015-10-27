@@ -1,0 +1,17 @@
+---
+- name: Download and install openssh-server
+  apt: name={{ item }} state=present
+  with_items:
+    - openssh-server
+
+- name: Enable ssh
+  service: name=ssh state=started enabled=yes
+
+- name: Generate passwordless ssh key pair
+  shell: ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+
+- name: Add public key to authorized_keys
+  shell: cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+- name: Create ssh config
+  copy: src=config dest=~/.ssh/config
