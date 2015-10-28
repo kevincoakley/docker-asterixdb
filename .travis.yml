@@ -8,9 +8,16 @@ services:
 before_install:
     - docker info
     - docker version
+
+install:
     - docker build -t kevincoakley/astrixdb .
-    - docker run --name my_astrixdb -d -p 19001:19001 kevincoakley/astrixdb
-    - docker ps -a
 
 script:
-    - HTTP_STATUS=`curl -sI http://127.0.0.1:19001/ | grep HTTP`; if [[ $HTTP_STATUS == *"200 OK"* ]]; then exit 0; else exit 1; fi
+    - docker run --name my_astrixdb -d -p 127.0.0.1:19001:19001 kevincoakley/astrixdb
+    - sleep 60
+    - bash ./tests/test_port_19001.sh
+
+after_script:
+    - docker ps -a
+    - docker logs my_astrixdb
+    - docker top my_astrixdb
