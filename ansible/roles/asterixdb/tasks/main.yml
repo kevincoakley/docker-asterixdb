@@ -10,7 +10,7 @@
   file: path=/opt/asterixdb state=directory mode=0755
 
 - name: Download AsterixDB
-  get_url: url=http://asterixdb.ics.uci.edu/download/0.8.6/asterix-installer-0.8.6-binary-assembly.zip dest=/tmp/asterix-installer.zip
+  get_url: url=http://www-us.apache.org/dist/incubator/asterixdb/asterix-installer-0.8.8-incubating-binary-assembly.zip dest=/tmp/asterix-installer.zip
 
 - name: Extract AsterixDB
   unarchive: src=/tmp/asterix-installer.zip dest=/opt/asterixdb/ copy=no
