@@ -4,7 +4,8 @@
   with_items:
   - openjdk-7-jdk
   - unzip
-  sudo: yes
+  become: yes
+  become_method: sudo
 
 - name: Create /opt/asterixdb
   file: path=/opt/asterixdb state=directory mode=0755
