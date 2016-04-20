@@ -1,4 +1,4 @@
-FROM ansible/ubuntu14.04-ansible:stable 
+FROM kevincoakley/ubuntu15.10-ansible
 MAINTAINER Kevin Coakley <kcoakley@sdsc.edu>
 
 ADD ansible /srv/ansible 
